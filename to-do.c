@@ -13,6 +13,9 @@ Tarefa *listaTarefas = NULL;
 int numTarefas = 0;  
 
 void CriarNovaTarefa (){
+    char titulo[] = "Nova Tarefa";
+    TituloMenu(titulo);
+
     listaTarefas = (Tarefa*)realloc(listaTarefas, (numTarefas + 1)*sizeof(Tarefa));
 
     if (listaTarefas == NULL){
@@ -62,6 +65,8 @@ void TarefasConcluidas(){
 }
 
 void MostrarTarefasConcluidas(){
+    char titulo[] = "Concluidas";
+    TituloMenu(titulo);
     printf("Tarefas Concluidas:\n");
 
     for(int i = 0; i < numTarefas; i++){
@@ -76,6 +81,8 @@ void MostrarTarefasConcluidas(){
 }
 
 void MostrarTarefasNaoConcluidas(){
+    char titulo[] = "Não Concluidas";
+    TituloMenu(titulo);
     printf("Tarefas Nao Concluidas:\n");
 
     for(int i = 0; i < numTarefas; i++){
@@ -90,6 +97,8 @@ void MostrarTarefasNaoConcluidas(){
 }
 
 void RemoverTarefa(){
+    char titulo[] = "Remover";
+    TituloMenu(titulo);
     MostrarTarefas();
     int indice;
     printf("tarefa para remover\n");
@@ -129,41 +138,78 @@ void Verificacao(char* string){
     }
 }
 
+void SalvarTarefas(){
+    FILE *arquivo = fopen("tarefas.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    for(int i = 0; i < numTarefas; i++){
+        fprintf(arquivo, "Tarefa %d:\n", i + 1);
+        fprintf(arquivo, "Titulo: %s", listaTarefas[i].titulo);
+        fprintf(arquivo, "Descricao: %s", listaTarefas[i].descricao);
+        fprintf(arquivo, "\n");
+    }
+
+    fclose(arquivo);
+    printf("Tarefas salvas com sucesso!\n");
+}
+
+void TituloMenu(char* titulo){
+    printf("\n========== %s ==========\n\n", titulo);
+}
+
 int main(){
 
     int opcao;
+    char titulo[] = "To-do-List";
 
-    do{    
+    do{ 
+
+        TituloMenu(titulo);  
         printf("1. Criar Tarefa\n");
         printf("2. Mostar Tarefas\n");
         printf("3. Marcar como Concluida\n");
         printf("4. Nao Conluidas\n");
         printf("5. Concluidas\n");
         printf("6. Remover Tarefa\n");
-        
+        printf("0. Sair\n");
+        printf("\n=================================\n");      
+
 
         scanf("%d", &opcao);
         getchar();
 
         switch (opcao){
         case 1:
+            system("cls");
             CriarNovaTarefa();
             break;
         case 2:
+            system("cls");
             MostrarTarefas();
             break;
         case 3:
+            system("cls");
             TarefasConcluidas();
             break;    
         case 4:
+            system("cls");
             MostrarTarefasNaoConcluidas();
             break;    
         case 5:
+            system("cls");
             MostrarTarefasConcluidas();
             break;
         case 6:
+            system("cls");
             RemoverTarefa();
             break;
+        case 7:
+            system("cls");
+            SalvarTarefas();
+            break;    
         break;    
         
         default:
@@ -171,6 +217,7 @@ int main(){
             break;
         }
 
+        
     } while(opcao != 0);
 
     LiberarMemoria();
