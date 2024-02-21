@@ -174,6 +174,7 @@ int main(){
         printf("4. Nao Conluidas\n");
         printf("5. Concluidas\n");
         printf("6. Remover Tarefa\n");
+        printf("7. Salvar Lista\n");
         printf("0. Sair\n");
         printf("\n=================================\n");      
 
